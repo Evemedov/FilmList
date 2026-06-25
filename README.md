@@ -1,9 +1,12 @@
 # Personal Media Tracker (FilmList)
 
-A highly customizable, microservice-based web application to track your personal media consumption, including Movies, TV Shows, and Anime.
+A microservice-based web application to track your personal media consumption, including Movies, TV Shows, and Anime.
 
 ## 📸 Screenshots
-
+![alt text](https://github.com/Evemedov/FilmList/blob/main/screenshots/screenshot1.png?raw=true)
+![alt text](https://github.com/Evemedov/FilmList/blob/main/screenshots/screenshot2.png?raw=true)
+![alt text](https://github.com/Evemedov/FilmList/blob/main/screenshots/screenshot3.png?raw=true)
+![alt text](https://github.com/Evemedov/FilmList/blob/main/screenshots/screenshot4.png?raw=true)
 
 ## 🌟 Features
 - **Comprehensive Media Tracking**: Keep track of your watch status, personal ratings (1-10), and text comments.
@@ -27,7 +30,7 @@ A highly customizable, microservice-based web application to track your personal
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Evemedov/FilmList.git
    cd FilmList
    ```
 
