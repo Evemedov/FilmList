@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { 
-  HomeIcon, 
+import {
+  HomeIcon,
   FilmIcon,
   Cog6ToothIcon,
   MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
+import { SiGithub } from "react-icons/si";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
@@ -47,10 +48,19 @@ export function Sidebar() {
           </NavLink>
         ))}
       </nav>
-      <div className="p-4 border-t border-border">
-        <p className="text-xs text-center text-muted-foreground">
+      <div className="p-4 border-t border-border flex flex-col items-center gap-1">
+        <p className="text-xs text-muted-foreground">
           Created by Evemed
         </p>
+        <a
+          href="https://github.com/Evemedov/FilmList"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary hover:underline transition-colors duration-200"
+        >
+          <SiGithub className="h-3.5 w-3.5" />
+          <span>GitHub</span>
+        </a>
       </div>
     </div>
   );
