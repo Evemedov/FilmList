@@ -1,0 +1,75 @@
+services:
+  # The database service (PostgreSQL)
+  fl-db:
+    image: postgres:16
+    container_name: fl-db
+    restart: unless-stopped
+    # Variables from .env file
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - fl-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${DB_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - fl-network
+  # The cache service (Redis)
+  fl-redis:
+    image: redis:8
+    container_name: fl-redis
+    restart: unless-stopped
+    volumes:
+      - fl-redis-data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - fl-network
+
+  # The backend service (FastAPI)
+  fl-backend:
+    build: ./backend
+    container_name: fl-backend
+    restart: unless-stopped
+    # Variables from .env file
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${DB_USER}:${DB_PASS}@fl-db/${DB_NAME}
+      - REDIS_URL=redis://fl-redis:6379/0
+      - TMDB_API_KEY=${TMDB_API_KEY}
+    depends_on:
+      fl-db:
+        condition: service_healthy
+      fl-redis:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - fl-network
+
+  # The frontend service (React)
+  fl-frontend:
+    build: ./frontend
+    container_name: fl-frontend
+    ports:
+      - 3001:80
+    depends_on:
+      - fl-backend
+    networks:
+      - fl-network
+
+volumes:
+  fl-db-data:
+  fl-redis-data:
+
+networks:
+  fl-network:
